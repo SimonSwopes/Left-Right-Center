@@ -67,7 +67,7 @@ function AddCourseScreen({ navigation }) {
 
     refs.current = refs;
     return (
-        <KeyboardAvoidingView style={styles.container} behavior="position" KeyboardVerticalOffset ={200} enabled>
+        <KeyboardAvoidingView style={styles.container} behavior="position" enabled>
             <Pressable style={styles.button} onPress={handleAddCourse}>
                 <Text style={styles.buttontext}>Add Course</Text>
             </Pressable>
@@ -100,7 +100,7 @@ function AddCourseScreen({ navigation }) {
                     <StatusBar barStyle='dark-content' hidden={false} translucent backgroundColor="transparent" />
                 </ScrollView>
             </SafeAreaView>
-        </KeyboardAvoidingView >
+        </KeyboardAvoidingView>
     )
 }
 

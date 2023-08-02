@@ -80,11 +80,32 @@ class Game {
 
             if (this.teamTracker[player][hole] == 'L') {
                 // if L is unset set it to the score otherwise convert it to a string and concatenate a string of newScore and convert back to Int
-                L = 0 ? this.scoreTracker[player][hole] : parseInt((L.toString() + this.scoreTracker[player][hole].toString));
+                if (L == 0) {
+                    L = this.scoreTracker[player][hole]
+                }
+                else {
+                    if (this.scoreTracker[player][hole] > L)
+                    {
+                        L = parseInt((L.toString() + this.scoreTracker[player][hole].toString()));
+                    }
+                    else {
+                        L = parseInt(this.scoreTracker[player][hole].toString() + L.toString());
+                    }
+                }
             }
             else if (teamTracker[player][hole] == 'R') {
                 // if L is unset set it to the score otherwise convert it to a string and concatenate a string of newScore and convert back to Int
-                R = 0 ? this.scoreTracker[player][hole] : parseInt((R.toString() + this.scoreTracker[player][hole].toString));
+                if (R == 0) {
+                    R = this.scoreTracker[player][hole]
+                }
+                else {
+                    if (this.scoreTracker[player][hole] > R) {
+                        parseInt((R.toString() + this.scoreTracker[player][hole].toString()));
+                    }
+                    else {
+                        parseInt(this.scoreTracker[player][hole].toString() + R.toString());
+                    }
+                }
             }
             else {
                 // as defined in rules C is always itself twice
@@ -112,3 +133,5 @@ class Game {
     }
 
 }
+
+export default Game;

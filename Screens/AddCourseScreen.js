@@ -16,9 +16,9 @@ function AddCourseScreen({ navigation }) {
 
     const handleAddCourse = () => {
         
-        var parSum = 0;
-        var frontNine = 0;
-        var backNine = 0;
+        let parSum = 0;
+        let frontNine = 0;
+        let backNine = 0;
         for (var parIdx = 0; parIdx < 18; parIdx++)
         {
             parSum += pars[parIdx];

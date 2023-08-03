@@ -43,6 +43,8 @@ function GameSetUpScreen({ navigation }) {
         if (games.length > 10) {
             setGames(games.splice(1, 9));
         }
+
+        navigation.navigate('Hole1Screen');
     }
 
     return (

@@ -11,6 +11,7 @@ import CoursesScreen from './Screens/CoursesScreen.js';
 import PastGamesScreen from './Screens/PastGamesScreen.js';
 import AddCourseScreen from './Screens/AddCourseScreen.js';
 import DeleteCourseScreen from './Screens/DeleteCourseScreen.js';
+import HolesScreen from './Screens/HolesScreen.js';
 
 // Context Imports
 import CourseContext from './Contexts/CourseContext.js';
@@ -42,13 +43,14 @@ function App() {
               },
             }}
             >
-            <Stack.Screen name= "Home" component={HomeScreen} options={{ title: 'Home'}}/>
-            <Stack.Screen name= "Courses" component={CoursesScreen} options={{title: 'Courses'}}/>
-            <Stack.Screen name= "Play" component={GameSetUpScreen} options={{title: 'Game Setup'}}/>
-            <Stack.Screen name= "Rules" component={RulesScreen} options={{title: 'How to Play'}}/>
-            <Stack.Screen name="Previous" component={PastGamesScreen} options={{title: 'Previous Games'}}/>
+            <Stack.Screen name= "Home" component={ HomeScreen } options={{ title: 'Home'}}/>
+            <Stack.Screen name= "Courses" component={ CoursesScreen } options={{title: 'Courses'}}/>
+            <Stack.Screen name= "Play" component={ GameSetUpScreen } options={{title: 'Game Setup'}}/>
+            <Stack.Screen name= "Rules" component={ RulesScreen } options={{title: 'How to Play'}}/>
+            <Stack.Screen name="Previous" component={ PastGamesScreen} options={{title: 'Previous Games'}}/>
             <Stack.Screen name="NewCourse" component={ AddCourseScreen } options={{ title: 'New Course'}}/>
             <Stack.Screen name="DeleteCourse" component={ DeleteCourseScreen } options={{title: 'Delete Course'}}/>
+            <Stack.Screen name="Hole1Screen" component={ HolesScreen } options={{title: "Hole 1"}}/>
           </Stack.Navigator>
         </NavigationContainer>
       </GameContext.Provider>

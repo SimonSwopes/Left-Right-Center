@@ -18,7 +18,27 @@ function HolesScreen({ navigation }) {
 
     const handleNext = () =>
     {
-        console.log('pressed');
+        if (leftSelected.length != 2) {
+            Alert.alert('Invalid Left Team', 'Must have 2 Players.');
+            return;
+        }
+
+        if (rightSelected.length != 2) {
+            Alert.alert('Invalid Right Team', 'Must have 2 Players.');
+            return;
+        }
+
+        if (centerSelected.length != 1) {
+            Alert.alert('Invalid Center Team', 'Must have 1 Player.');
+            return;
+        }
+
+        for (let i = 0; i < currentGame.getPlayers().length; i++) {
+            if (currentGame.getScores()[i] == null || currentGame.getScores()[i] <= 0) {
+                Alert.alert('Invalid Scores', 'Score must be real.');
+                return;
+            }
+        }
     }
 
     return (

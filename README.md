@@ -8,7 +8,7 @@ There are other dependencies too that allow for more features, such as, react na
 
 ### File Structure
 **Contexts Folder** 
- - has code that isn't used for visual Elements of the App. Defined within it are mant contexts to allow communicaiton between screens and some Javascipt files that define the game logic itself.
+- has code that isn't used for visual Elements of the App. Defined within it are mant contexts to allow communicaiton between screens and some Javascipt files that define the game logic itself.
 <br>
 **Screens Folder**
 - has the code that defines the visual elements of the app. There are several screens and anytime a new screen is added it should have it's own file.

@@ -33,13 +33,34 @@ function HolesScreen({ navigation }) {
             return;
         }
 
+        let hole = currentGame.getHole();
         for (let i = 0; i < currentGame.getPlayers().length; i++) {
-            if (currentGame.getScores()[i] == null || currentGame.getScores()[i] <= 0) {
+            let player = currentGame.getPlayers()[i];
+            if (currentGame.getScores()[player][hole] == null || currentGame.getScores()[player][hole] <= 0) {
                 Alert.alert('Invalid Scores', 'Score must be real.');
                 return;
             }
         }
-    }
+
+        if (currentGame.getHole() < 18) {
+            currentGame.nextHole();
+            navigation.navigate(hole.toString());
+        }
+        else {
+            navigation.navigate('Home');
+        }
+    };
+
+    const handleScoreUpdate= (index, value) => {
+
+        let hole = currentGame.getHole()
+        let player = currentGame.getPlayers()[index];
+
+        currentGame.setRawScores(hole, player, parseInt(value, 10));
+
+        const playerScore = currentGame.getScores()[player][hole];
+        console.log(`${playerScore}`);
+    };
 
     return (
         <View style={styles.container}>
@@ -99,6 +120,7 @@ function HolesScreen({ navigation }) {
                         style={[styles.input]}
                         keyboardType="numeric"
                         placeholder={currentGame.getPlayers()[index]}
+                        onChangeText={(value) => handleScoreUpdate(index, value)}
                     />
                 ))}
                 </View>

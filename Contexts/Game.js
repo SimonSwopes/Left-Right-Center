@@ -20,9 +20,9 @@ class Game {
         for (let i = 0; i < this.players.length; i++)
         {
             const player = this.players[i];
-            this.teamTracker[player] = new Array(18);
-            this.scoreTracker[player] = new Array(18);
-            this.dollarTotals[player] = new Array(18);
+            this.teamTracker[player] = new Array(18).fill(null);
+            this.scoreTracker[player] = new Array(18).fill(null);
+            this.dollarTotals[player] = new Array(18).fill(null);
         }
     }
 

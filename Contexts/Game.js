@@ -15,8 +15,9 @@ class Game {
         this.scoreTracker = {};
         this.dollarTotals = {};
         this.mult = 1;
+        this.hole = 0;
 
-        // populate tracker where players are the keys values are empty list for now
+        // populate tracker where players are the keys values are empty array for now
         for (let i = 0; i < this.players.length; i++)
         {
             const player = this.players[i];
@@ -46,6 +47,22 @@ class Game {
         return this.dollarTotals;
     }
 
+    getHole() {
+        return this.hole;
+    }
+
+    nextHole() {
+        if (this.hole < 17) {
+            this.hole++;
+        }
+    }
+
+    prevHole() {
+        if (this.hole > 0) {
+            this.hole--;
+        }
+    }
+
     // Will be available at hole 15 players can decide to double the value of the shots
     doubleAmounts() {
         this.mult = 2;
@@ -61,13 +78,12 @@ class Game {
         }
     }
 
-    setRawScores(hole, playerTotals) {
-        // PlayerTotals is a dict where key is player name and vlaue is an int denoting shots to make it in the hole
+    setRawScores(hole, player, playerScore) {
+        // PlayerTotals is a dict where key is player name and value is an int denoting shots to make it in the hole
         // Hole is an int [0,17]'
 
-        for (const player of this.players) {
-            this.scoreTracker[player][hole] = playerTotals[player];
-        }
+        this.scoreTracker[player][hole] = playerScore;
+        console.log("Score change");
     }
 
     // This method sohuld be done for every hole after teams and rawscores are input

@@ -81,6 +81,90 @@ class Game {
         this.scoreTracker[player][this.hole] = parseInt(playerScore, 10);
         
     }
+
+    calculatePoint() {
+
+        let leftTeamPoints = 0;
+        let rightTeamPoints = 0;
+        let centerTeamPoints = 0;
+
+        // fill temporary variable ensure that preceding number is the lowest one
+        for (let i = 0; i < this.players.length; i++) {
+            let player = this.getPlayers()[i];
+
+            if (this.getTeams()[player][this.getHole()] === 'L') {
+                if (leftTeamPoints === 0) {
+                    leftTeamPoints = this.getScores()[player][this.getHole()];
+                }
+                else {
+                    if (leftTeamPoints < this.getScores()[player][this.getHole()]) {
+                        leftTeamPoints = parseInt(leftTeamPoints.toString() + this.getScores()[player][this.getHole()].toString, 10);
+                    }
+                    else {
+                        leftTeamPoints = parseInt(this.getScores()[player][this.getHole()].toString() + leftTeamPoints.toString(), 10);
+                    }
+                }
+            }
+
+            else if (this.getTeams()[player][this.getHole()] === 'R') {
+                if (rightTeamPoints === 0) {
+                    rightTeamPoints = this.getScores()[player][this.getHole()];
+                }
+                else {
+                    if (rightTeamPoints < this.getScores()[player][this.getHole()]) {
+                        rightTeamPoints = parseInt(rightTeamPoints.toString() + this.getScores()[player][this.getHole()].toString, 10);
+                    }
+                    else {
+                        rightTeamPoints = parseInt(this.getScores()[player][this.getHole()].toString() + rightTeamPoints.toString(), 10);
+                    }
+                }
+            }
+
+            else {
+                centerTeamPoints = parseInt(this.getScores()[player][this.getHole()].toString() + this.getScores()[player][this.getHole()].toString, 10);
+            }
+        }
+
+        leftTeamPoints *= this.mult;
+        rightTeamPoints *= this.mult;
+        centerTeamPoints *= this.mult;
+
+        let centerNetPoints = (rightTeamPoints - centerTeamPoints) + (leftTeamPoints - centerTeamPoints);
+        let leftNetPoints = (rightTeamPoints - leftTeamPoints) + (centerTeamPoints - leftTeamPoints);
+        let rightNetPoints = (centerTeamPoints - rightTeamPoints) + (leftTeamPoints - rightTeamPoints);
+
+        for (let i = 0; i < this.players.length; i++) {
+            let player = this.getPlayers()[i];
+
+            if (this.getTeams()[player][this.getHole()] === 'L') {
+                if (this.getHole() === 0) {
+                    this.pointTotals[player][this.getHole()] = leftNetPoints;
+                }
+                else {
+                    this.pointTotals[player][this.getHole()] = this.pointTotals[player][this.getHole() - 1] + leftNetPoints;
+                }
+            }
+
+            else if (this.getTeams()[player][this.gethole()] === 'R') {
+                if (this.getHole() === 0) {
+                    this.pointTotals[player][this.getHole()] = rightNetPoints;
+                }
+                else {
+                    this.pointTotals[player][this.getHole()] = this.pointTotals[player][this.getHole() - 1] + rightNetPoints;
+                }
+            }
+
+            else {
+                if (this.getHole() === 0) {
+                    this.pointTotals[player][this.getHole()] = centerNetPoints;
+                }
+                else {
+                    this.pointTotals[player][this.getHole()] = this.pointTotals[player][this.getHole() - 1] + centerNetPoints;
+                }
+            }
+        }
+
+    }
 }
 
 export default Game;

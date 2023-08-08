@@ -43,8 +43,8 @@ class Game {
         return this.scoreTracker;
     }
 
-    getAmounts() {
-        return this.dollarTotals;
+    getPoints() {
+        return this.pointTotals;
     }
 
     getHole() {
@@ -82,7 +82,7 @@ class Game {
         
     }
 
-    calculatePoint() {
+    calculatePoints() {
 
         let leftTeamPoints = 0;
         let rightTeamPoints = 0;

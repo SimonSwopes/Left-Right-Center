@@ -67,6 +67,12 @@ function HolesScreen({ navigation }) {
         }
         currentGame.setTeams(centerSelected[0], 'C');
 
+
+        currentGame.calculatePoints();
+        let player1Score = currentGame.getPoints()[currentGame.getPlayers()[0]][currentGame.getHole()];
+        console.log(`${player1Score}`);
+
+
         if (currentGame.getHole() < 17) {
             currentGame.nextHole();
             navigation.navigate(currentGame.getHole().toString());

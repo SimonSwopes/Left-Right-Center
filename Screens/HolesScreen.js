@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, Alert, TextInput, Pressable } from 'react-native';
+import {View, Text, StyleSheet, Alert, TextInput, Pressable, Button } from 'react-native';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
 import GameContext from '../Contexts/GameListContext.js';
 
@@ -15,6 +15,15 @@ function HolesScreen({ navigation }) {
 
     currentGame = games[games.length - 1];
 
+    if (currentGame.getHole() == 16) {
+        Alert.alert('Double Points?', 'Select Yes to double points for the rest of the game.',[
+            {
+                text: 'No',
+                style: 'cancel',
+            },
+            {text: 'Yes', onPress: ()=> currentGame.doubleAmounts}
+        ])
+    }
 
     const handleNext = () =>
     {

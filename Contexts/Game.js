@@ -72,7 +72,7 @@ class Game {
     setTeams(player, teamIndicator) {
         // player is the string of the player and the Indicator is a char indicating their team
 
-        this.teamTracker[player][this.hole] = teamIndicator;
+        this.teamTracker[player][this.hole()] = teamIndicator;
 
     }
 
@@ -145,7 +145,7 @@ class Game {
                 }
             }
 
-            else if (this.getTeams()[player][this.gethole()] === 'R') {
+            else if (this.getTeams()[player][this.getHole()] === 'R') {
                 if (this.getHole() === 0) {
                     this.pointTotals[player][this.getHole()] = rightNetPoints;
                 }

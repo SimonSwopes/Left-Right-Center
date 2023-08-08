@@ -50,7 +50,7 @@ function App() {
             <Stack.Screen name="Previous" component={ PastGamesScreen} options={{title: 'Previous Games'}}/>
             <Stack.Screen name="NewCourse" component={ AddCourseScreen } options={{ title: 'New Course'}}/>
             <Stack.Screen name="DeleteCourse" component={ DeleteCourseScreen } options={{title: 'Delete Course'}}/>
-            <Stack.Screen name="0" component={ HolesScreen } options={{title: "Hole 1"}}/>
+            <Stack.Screen name="0" component={ HolesScreen } options={{ title: "Hole 1"}}/>
             <Stack.Screen name="1" component={HolesScreen} options={{ title: "Hole 2" }} />
             <Stack.Screen name="2" component={HolesScreen} options={{ title: "Hole 3" }} />
             <Stack.Screen name="3" component={HolesScreen} options={{ title: "Hole 4" }} />

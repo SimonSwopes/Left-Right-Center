@@ -68,9 +68,20 @@ function HolesScreen({ navigation }) {
     };
 
     const handleInGameGoBack = () => {
-        console.log('back pressed');
+        currentGame.prevHole();
     }
     
+
+    React.useEffect(
+        () =>
+            navigation.addListener('beforeRemove', (e) => {
+                e.preventDefault();
+
+                handleInGameGoBack();
+
+                navigation.dispatch(e.data.action)
+            })
+    )
 
     return (
         <View style={styles.container}>
@@ -121,7 +132,7 @@ function HolesScreen({ navigation }) {
                 inputStyles={styles.generalText}
             />
             <View style={styles.scoreContainer}>
-                <Text style={styles.generalText}>Scores Here</Text>
+                <Text style={styles.generalText}>Scores:</Text>
                 <View style={styles.gridContainer}>
                 {Array.from({ length: 5}, (_, index) => (
                     <TextInput

@@ -33,6 +33,14 @@ function HolesScreen({ navigation }) {
             return;
         }
 
+        for (let i = 0; i < currentGame.getPlayers().length; i++) {
+            let player = currentGame.getPlayers()[i];
+            if (currentGame.getScores()[player][currentGame.getHole()] <= 0) {
+                Alert.alert('Invalid Scores', 'Scores must be real.');
+                return;
+            }
+        }
+
         // Ensure that no selected teams have repeated names
         for (let i = 0; i < 2; i++) {
             for (let j = 0; j < 2; j++)

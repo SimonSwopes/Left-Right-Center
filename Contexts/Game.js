@@ -9,21 +9,21 @@ This data will latter be able to be mapped to a component allowing for an easy r
 
 class Game {
     constructor(course, players) {
-        this.course = course;
-        this.players = players;
-        this.teamTracker = {};
-        this.scoreTracker = {};
-        this.dollarTotals = {};
-        this.mult = 1;
-        this.hole = 0;
+        this.course = course; // a course object
+        this.players = players; // an array of strings that store player names these will be referenced as keys
+        this.teamTracker = {}; // dictionary where a player is the key and there is an array for the holes and array has a char for each team;
+        this.scoreTracker = {}; // dictionary where key is a player each player has an array for the holes will be 0 originally
+        this.pointTotals = {}; // dictionary where key is a player each player has an array for the holes will be 0 originally
+        this.mult = 1; // multiplier to the points option to double at hole 16
+        this.hole = 0; // a way to keep track of what hole is currently being played
 
         // populate tracker where players are the keys values are empty array for now
         for (let i = 0; i < this.players.length; i++)
         {
             const player = this.players[i];
             this.teamTracker[player] = new Array(18).fill(null);
-            this.scoreTracker[player] = new Array(18).fill(null);
-            this.dollarTotals[player] = new Array(18).fill(null);
+            this.scoreTracker[player] = new Array(18).fill(0);
+            this.pointTotals[player] = new Array(18).fill(0);
         }
     }
 
@@ -63,91 +63,24 @@ class Game {
         }
     }
 
-    // Will be available at hole 15 players can decide to double the value of the shots
+    // Will be available at hole 16 players can decide to double the value of the shots
     doubleAmounts() {
         this.mult = 2;
     }
 
     // setTeam for hole
-    setTeams(hole, playerTeam) {
-        // player team is a dict where key is player name and value is a char denoting team L R or C
-        // Hole is an int [0,17]
+    setTeams(player, teamIndicator) {
+        // player is the string of the player and the Indicator is a char indicating their team
 
-        for (const player of this.players) {
-            this.teamTracker[player][hole] = playerTeam[player];
-        }
+        this.teamTracker[player][this.hole] = teamIndicator;
+
     }
 
-    setRawScores(hole, player, playerScore) {
-        // PlayerTotals is a dict where key is player name and value is an int denoting shots to make it in the hole
-        // Hole is an int [0,17]'
-
-        this.scoreTracker[player][hole] = playerScore;
-        console.log("Score change");
+    setRawScore(player, playerScore) {
+        // player is the string of the player and their score is the num of strokes to get into the hole
+        this.scoreTracker[player][this.hole] = parseInt(playerScore, 10);
+        
     }
-
-    // This method sohuld be done for every hole after teams and rawscores are input
-    calculateTotals(hole) {
-        let L = 0;
-        let R = 0;
-        let C = 0;
-
-        for (const player of this.players) {
-
-            if (this.teamTracker[player][hole] == 'L') {
-                // if L is unset set it to the score otherwise convert it to a string and concatenate a string of newScore and convert back to Int
-                if (L == 0) {
-                    L = this.scoreTracker[player][hole]
-                }
-                else {
-                    if (this.scoreTracker[player][hole] > L)
-                    {
-                        L = parseInt((L.toString() + this.scoreTracker[player][hole].toString()));
-                    }
-                    else {
-                        L = parseInt(this.scoreTracker[player][hole].toString() + L.toString());
-                    }
-                }
-            }
-            else if (teamTracker[player][hole] == 'R') {
-                // if L is unset set it to the score otherwise convert it to a string and concatenate a string of newScore and convert back to Int
-                if (R == 0) {
-                    R = this.scoreTracker[player][hole]
-                }
-                else {
-                    if (this.scoreTracker[player][hole] > R) {
-                        parseInt((R.toString() + this.scoreTracker[player][hole].toString()));
-                    }
-                    else {
-                        parseInt(this.scoreTracker[player][hole].toString() + R.toString());
-                    }
-                }
-            }
-            else {
-                // as defined in rules C is always itself twice
-                C = parseInt(this.scoreTracker[player][hole].toString + this.scoreTracker[player][hole].toString);
-            }
-        }
-
-        // use the team totals to figure out who owes how much
-        let leftAmount = (L + (R + C)) * this.mult;
-        let rightAmount = (R + (L + C)) * this.mult;
-        let centerAmount = (C + (L + R)) * this.mult;
-
-        // TODO: use those amounts to update the dollarTotals
-        for (const player of this.players) {
-            if (this.teamTracker[player][hole] == 'L') {
-                this.dollarTotals[player][hole] += leftAmount;
-            }
-            else if (this.teamTracker[player][hole] == 'R') {
-                this.dollarTotals[player][hole] += rightAmount;
-            }
-            else {
-                this.dollarTotals[player][hole] += centerAmount;
-            }
-        }
-    }
-
 }
 
 export default Game;

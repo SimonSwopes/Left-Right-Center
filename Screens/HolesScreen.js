@@ -33,34 +33,44 @@ function HolesScreen({ navigation }) {
             return;
         }
 
-        let hole = currentGame.getHole();
-        for (let i = 0; i < currentGame.getPlayers().length; i++) {
-            let player = currentGame.getPlayers()[i];
-            if (currentGame.getScores()[player][hole] == null || currentGame.getScores()[player][hole] <= 0) {
-                Alert.alert('Invalid Scores', 'Score must be real.');
-                return;
+        // Ensure that no selected teams have repeated names
+        for (let i = 0; i < 2; i++) {
+            for (let j = 0; j < 2; j++)
+            {
+                if (leftSelected[i] == rightSelected[j] || leftSelected[i] == centerSelected[0] || rightSelected[j] == centerSelected[0]) {
+                    Alert.alert('Invalid Teams', 'A player can only be on 1 team.');
+                    return;
+                }
             }
         }
 
-        if (currentGame.getHole() < 18) {
+        for (let i = 0; i < 2; i++) {
+            currentGame.setTeams(leftSelected[i], 'L');
+            currentGame.setTeams(rightSelected[i], 'R');
+        }
+        currentGame.setTeams(centerSelected[0], 'C');
+
+        if (currentGame.getHole() < 17) {
             currentGame.nextHole();
-            navigation.navigate(hole.toString());
+            navigation.navigate(currentGame.getHole().toString());
         }
         else {
             navigation.navigate('Home');
         }
     };
 
-    const handleScoreUpdate= (index, value) => {
+    const handleScoreUpdate = (index, value) => {
 
         let hole = currentGame.getHole()
         let player = currentGame.getPlayers()[index];
 
-        currentGame.setRawScores(hole, player, parseInt(value, 10));
-
-        const playerScore = currentGame.getScores()[player][hole];
-        console.log(`${playerScore}`);
+        currentGame.setRawScore(player, value);
     };
+
+    const handleInGameGoBack = () => {
+        console.log('back pressed');
+    }
+    
 
     return (
         <View style={styles.container}>
@@ -153,7 +163,7 @@ const styles = StyleSheet.create({
         flex: 3,
         backgroundColor: '#000',
         alignItems: 'center',
-        jsutifyContent: 'center',
+        justifyContent: 'center',
     },
 
     generalText: {

@@ -44,7 +44,7 @@ function GameSetUpScreen({ navigation }) {
             setGames(games.splice(1, 9));
         }
 
-        navigation.navigate('1');
+        navigation.navigate('0');
     }
 
     return (

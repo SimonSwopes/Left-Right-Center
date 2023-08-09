@@ -72,13 +72,13 @@ class Game {
     setTeams(player, teamIndicator) {
         // player is the string of the player and the Indicator is a char indicating their team
 
-        this.teamTracker[player][this.hole()] = teamIndicator;
+        this.teamTracker[player][this.getHole()] = teamIndicator;
 
     }
 
     setRawScore(player, playerScore) {
         // player is the string of the player and their score is the num of strokes to get into the hole
-        this.scoreTracker[player][this.hole] = parseInt(playerScore, 10);
+        this.scoreTracker[player][this.getHole()] = parseInt(playerScore, 10);
         
     }
 
@@ -98,7 +98,7 @@ class Game {
                 }
                 else {
                     if (leftTeamPoints < this.getScores()[player][this.getHole()]) {
-                        leftTeamPoints = parseInt(leftTeamPoints.toString() + this.getScores()[player][this.getHole()].toString, 10);
+                        leftTeamPoints = parseInt(leftTeamPoints.toString() + this.getScores()[player][this.getHole()].toString(), 10);
                     }
                     else {
                         leftTeamPoints = parseInt(this.getScores()[player][this.getHole()].toString() + leftTeamPoints.toString(), 10);
@@ -112,7 +112,7 @@ class Game {
                 }
                 else {
                     if (rightTeamPoints < this.getScores()[player][this.getHole()]) {
-                        rightTeamPoints = parseInt(rightTeamPoints.toString() + this.getScores()[player][this.getHole()].toString, 10);
+                        rightTeamPoints = parseInt(rightTeamPoints.toString() + this.getScores()[player][this.getHole()].toString(), 10);
                     }
                     else {
                         rightTeamPoints = parseInt(this.getScores()[player][this.getHole()].toString() + rightTeamPoints.toString(), 10);
@@ -121,7 +121,7 @@ class Game {
             }
 
             else {
-                centerTeamPoints = parseInt(this.getScores()[player][this.getHole()].toString() + this.getScores()[player][this.getHole()].toString, 10);
+                centerTeamPoints = parseInt(this.getScores()[player][this.getHole()].toString() + this.getScores()[player][this.getHole()].toString(), 10);
             }
         }
 
@@ -129,7 +129,7 @@ class Game {
         rightTeamPoints *= this.mult;
         centerTeamPoints *= this.mult;
 
-        let centerNetPoints = (rightTeamPoints - centerTeamPoints) + (leftTeamPoints - centerTeamPoints);
+        let centerNetPoints = ((rightTeamPoints - centerTeamPoints) + (leftTeamPoints - centerTeamPoints)) * 2;
         let leftNetPoints = (rightTeamPoints - leftTeamPoints) + (centerTeamPoints - leftTeamPoints);
         let rightNetPoints = (centerTeamPoints - rightTeamPoints) + (leftTeamPoints - rightTeamPoints);
 

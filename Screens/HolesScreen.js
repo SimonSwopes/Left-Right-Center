@@ -69,8 +69,24 @@ function HolesScreen({ navigation }) {
 
 
         currentGame.calculatePoints();
+
+        let player1 = currentGame.getPlayers()[0]
+        let player2 = currentGame.getPlayers()[1]
+        let player3 = currentGame.getPlayers()[2]
+        let player4 = currentGame.getPlayers()[3]
+        let player5 = currentGame.getPlayers()[4]
+
         let player1Score = currentGame.getPoints()[currentGame.getPlayers()[0]][currentGame.getHole()];
-        console.log(`${player1Score}`);
+        let player2Score = currentGame.getPoints()[currentGame.getPlayers()[1]][currentGame.getHole()];
+        let player3Score = currentGame.getPoints()[currentGame.getPlayers()[2]][currentGame.getHole()];
+        let player4Score = currentGame.getPoints()[currentGame.getPlayers()[3]][currentGame.getHole()];
+        let player5Score = currentGame.getPoints()[currentGame.getPlayers()[4]][currentGame.getHole()];
+        console.log(`Hole: ${currentGame.getHole() + 1}`);
+        console.log(`${player1}: ${player1Score}`);
+        console.log(`${player2}: ${player2Score}`);
+        console.log(`${player3}: ${player3Score}`);
+        console.log(`${player4}: ${player4Score}`);
+        console.log(`${player5}: ${player5Score}`);
 
 
         if (currentGame.getHole() < 17) {
@@ -84,7 +100,6 @@ function HolesScreen({ navigation }) {
 
     const handleScoreUpdate = (index, value) => {
 
-        let hole = currentGame.getHole()
         let player = currentGame.getPlayers()[index];
 
         currentGame.setRawScore(player, value);

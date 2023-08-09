@@ -65,6 +65,7 @@ function GameSetUpScreen({ navigation }) {
                 boxStyles = {styles.dropDownBox}
                 dropdownTextStyles={styles.generalText}
                 inputStyles={styles.generalText}
+                
             />
 
                 <View style={styles.playerContainer}>

@@ -15,6 +15,11 @@ function AddCourseScreen({ navigation }) {
     const refs = React.useRef(Array(18).fill(null));
 
     const handleAddCourse = () => {
+
+        if (course.length < 1) {
+            Alert.alert('Invalid Course Name', 'Please enter a course name.');
+            return;
+        }
         
         let parSum = 0;
         for (var parIdx = 0; parIdx < 18; parIdx++)
@@ -55,10 +60,12 @@ function AddCourseScreen({ navigation }) {
         if (value.length === 1) {
             const nextIndex = index + 1;
             if (nextIndex < 18) {
-                Keyboard.dismiss();
                 setTimeout(() => {
                     refs.current[nextIndex].focus();
                 },100);
+            }
+            else {
+                Keyboard.dismiss();
             }
         }
     };

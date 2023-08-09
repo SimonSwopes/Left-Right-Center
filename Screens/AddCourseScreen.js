@@ -17,36 +17,34 @@ function AddCourseScreen({ navigation }) {
     const handleAddCourse = () => {
         
         let parSum = 0;
-        let frontNine = 0;
-        let backNine = 0;
         for (var parIdx = 0; parIdx < 18; parIdx++)
         {
             parSum += pars[parIdx];
-
-            if (parIdx < 9) {
-                frontNine += pars[parIdx];
-            }
-            else {
-                backNine += pars[parIdx];
-            }
         }
 
-        if (frontNine != 36) {
-            Alert.alert('Error', 'The front nine pars do not add to 36.');
-            return;
-        }
-        else if (backNine != 36) {
-            Alert.alert('Error', 'The back nine pars do not add to 36.');
-            return;
-        }
-        else if (parSum != 72) {
-            Alert.alert('Error', 'The pars do not add to 72.');
+        if (parSum < 18) {
+            Alert.alert('Invalid Pars', 'Pars must be real.');
             return;
         }
 
-        const newCourse = new Course(course, pars);
-        setCourseData([...courseData, newCourse]);
-        navigation.goBack();
+        if (parSum != 72) {
+            Alert.alert('Pars do not add to 72', 'Is this course a par 72?', [
+                {
+                    text: 'No',
+                    onPress: () => {
+                        const newCourse = new Course(course, pars);
+                        setCourseData([...courseData, newCourse]);
+                        navigation.goBack();
+                    }
+                },
+                {text: 'Yes', style: 'cancel'}
+            ])
+        }
+        else{
+            const newCourse = new Course(course, pars);
+            setCourseData([...courseData, newCourse]);
+            navigation.goBack();
+        }
     };
 
     const handleParChange = (index, value) => {

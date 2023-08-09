@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, FlatList, Button, TextInput, SafeAreaView, ScrollView, KeyboardAvoidingView, Alert, Pressable } from 'react-native';
 import { useContext } from 'react';
+import { SelectList } from 'react-native-dropdown-select-list';
+
 import CourseContext from '../Contexts/CourseContext';
 import GameContext from '../Contexts/GameListContext.js';
 import Game from '../Contexts/Game';
@@ -9,20 +11,16 @@ function GameSetUpScreen({ navigation }) {
     const { courseData, setCourseData } = useContext(CourseContext);
     const { games, setGames } = useContext(GameContext);
 
+    const courseNames = [];
+    for (let i = 0; i < courseData.length; i++) {
+        courseNames.push(courseData[i].getCourseName());
+    }
+
+    const [selectedCourse, setSelectedCourse] = React.useState("");
+
     let gameCourse = null;
     const refs = React.useRef(Array(5).fill(null));
     const [players, setPlayers] = React.useState([]);
-
-    const setCourse = (course) => {
-        gameCourse = course;
-    }; 
-
-    const renderCourseList = ({ item }) => {
-        const courseName = item.getCourseName();
-        return (
-            <Button title={courseName} onPress={() => setCourse(item)}/>
-        )
-    };
 
     const handleplayerChange = (index, value) => {
         const updatedPlayers = [...players];
@@ -31,10 +29,16 @@ function GameSetUpScreen({ navigation }) {
     };
 
     const setGame = () => {
-        if (gameCourse == null)
-        {
+        if (selectedCourse.length < 1) {
             Alert.alert('Error', 'No Course Selected.');
             return;
+        }
+
+        for (let i = 0; i < courseData.length; i++) {
+            if (courseData[i].getCourseName() === selectedCourse) {
+                gameCourse = courseData[i];
+                break;
+            }
         }
 
         const newGame = new Game(gameCourse, players);
@@ -52,11 +56,17 @@ function GameSetUpScreen({ navigation }) {
         <View style={styles.courseContainer}>
             <Text style={styles.generalText}>Select Course</Text>
             <Button title='New Course' onPress={() => navigation.navigate('NewCourse')}/>
-            <FlatList
-                data={courseData}
-                renderItem={renderCourseList}
-                keyExtractor={(item, index) => index.toString()}
+            
+            <SelectList
+                setSelected={(val) => setSelectedCourse(val)}
+                data={courseNames}
+                save="value"
+                search={false}
+                boxStyles = {styles.dropDownBox}
+                dropdownTextStyles={styles.generalText}
+                inputStyles={styles.generalText}
             />
+
                 <View style={styles.playerContainer}>
                     <Text style={styles.generalText}>Player Names</Text>
                         {Array.from({ length: 5 }, (_, index) => (
@@ -147,6 +157,12 @@ const styles = StyleSheet.create({
         fontFamily: 'Times New Roman',
         fontSize: 24,
     },
+
+    dropDownBox: {
+        backgroundColor: '#03AC13',
+    },
+
+    
 })
 
 export default GameSetUpScreen;

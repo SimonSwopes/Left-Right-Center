@@ -15,13 +15,13 @@ function HolesScreen({ navigation }) {
 
     currentGame = games[games.length - 1];
 
-    if (currentGame.getHole() == 16) {
+    if (currentGame.getHole() == 15) {
         Alert.alert('Double Points?', 'Select Yes to double points for the rest of the game.',[
             {
                 text: 'No',
                 style: 'cancel',
             },
-            {text: 'Yes', onPress: ()=> currentGame.doubleAmounts}
+            {text: 'Yes', onPress: ()=> currentGame.doubleAmounts()}
         ])
     }
 

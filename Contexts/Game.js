@@ -84,55 +84,97 @@ class Game {
 
     calculatePoints() {
 
-        let leftTeamPoints = 0;
-        let rightTeamPoints = 0;
-        let centerTeamPoints = 0;
+        let leftTeam = [];
+        let rightTeam = [];
+        let centerTeam =[];
 
-        // fill temporary variable ensure that preceding number is the lowest one
+        // fill the team array with scores
         for (let i = 0; i < this.players.length; i++) {
             let player = this.getPlayers()[i];
 
             if (this.getTeams()[player][this.getHole()] === 'L') {
-                if (leftTeamPoints === 0) {
-                    leftTeamPoints = this.getScores()[player][this.getHole()];
-                }
-                else {
-                    if (leftTeamPoints < this.getScores()[player][this.getHole()]) {
-                        leftTeamPoints = parseInt(leftTeamPoints.toString() + this.getScores()[player][this.getHole()].toString(), 10);
-                    }
-                    else {
-                        leftTeamPoints = parseInt(this.getScores()[player][this.getHole()].toString() + leftTeamPoints.toString(), 10);
-                    }
-                }
+
+                leftTeam.push(this.getScores()[player][this.getHole()].toString());
             }
 
             else if (this.getTeams()[player][this.getHole()] === 'R') {
-                if (rightTeamPoints === 0) {
-                    rightTeamPoints = this.getScores()[player][this.getHole()];
-                }
-                else {
-                    if (rightTeamPoints < this.getScores()[player][this.getHole()]) {
-                        rightTeamPoints = parseInt(rightTeamPoints.toString() + this.getScores()[player][this.getHole()].toString(), 10);
-                    }
-                    else {
-                        rightTeamPoints = parseInt(this.getScores()[player][this.getHole()].toString() + rightTeamPoints.toString(), 10);
-                    }
-                }
+
+                rightTeam.push(this.getScores()[player][this.getHole()].toString());
             }
 
             else {
-                centerTeamPoints = parseInt(this.getScores()[player][this.getHole()].toString() + this.getScores()[player][this.getHole()].toString(), 10);
+                centerTeam.push(this.getScores()[player][this.getHole()].toString());
             }
         }
 
-        leftTeamPoints *= this.mult;
-        rightTeamPoints *= this.mult;
-        centerTeamPoints *= this.mult;
+        let centerNetPoints = 0;
+        let rightNetPoints = 0;
+        let leftNetPoints = 0;
 
-        let centerNetPoints = ((rightTeamPoints - centerTeamPoints) + (leftTeamPoints - centerTeamPoints)) * 2;
-        let leftNetPoints = (rightTeamPoints - leftTeamPoints) + (centerTeamPoints - leftTeamPoints);
-        let rightNetPoints = (centerTeamPoints - rightTeamPoints) + (leftTeamPoints - rightTeamPoints);
+        // determine relationship between center and the 2 other teams
+        if (centerTeam[0] < this.getCourse().getHolePar(this.getHole())) {
+            let rightLocalPoints = (parseInt(rightTeam[0], 10) < parseInt(rightTeam[1], 10)) ? parseInt(rightTeam[1] + rightTeam[0], 10) : parseInt(rightTeam[0] + rightTeam[1], 10);
+            let leftLocalPoints = (parseInt(leftTeam[0], 10) < parseInt(leftTeam[1], 10)) ? parseInt(leftTeam[1] + leftTeam[0], 10) : parseInt(leftTeam[0] + leftTeam[1], 10);
 
+            centerNetPoints = ((rightLocalPoints - parseInt(centerTeam[0] + centerTeam[0], 10)) + (leftLocalPoints - parseInt(centerTeam[0] + centerTeam[0], 10))) *2;
+            rightNetPoints = (parseInt(centerTeam[0] + centerTeam[0], 10) - rightLocalPoints);
+            leftNetPoints = (parseInt(centerTeam[0] + centerTeam[0], 10) - leftLocalPoints);
+        }
+        else {
+            let rightLocalPoints = (parseInt(rightTeam[0], 10) > parseInt(rightTeam[1], 10)) ? parseInt(rightTeam[1] + rightTeam[0], 10) : parseInt(rightTeam[0] + rightTeam[1], 10);
+            let leftLocalPoints = (parseInt(leftTeam[0], 10) > parseInt(leftTeam[1], 10)) ? parseInt(leftTeam[1] + leftTeam[0], 10) : parseInt(leftTeam[0] + leftTeam[1], 10);
+
+            centerNetPoints = ((rightLocalPoints - parseInt(centerTeam[0] + centerTeam[0], 10)) + (leftLocalPoints - parseInt(centerTeam[0] + centerTeam[0], 10))) * 2;
+            rightNetPoints = (parseInt(centerTeam[0] + centerTeam[0], 10) - rightLocalPoints) ;
+            leftNetPoints = (parseInt(centerTeam[0] + centerTeam[0], 10) - leftLocalPoints);
+        }
+
+        // determine the relationship between left and right
+
+        // case where right has birdie or better
+        if (rightTeam[0] < this.getCourse().getHolePar(this.getHole()) || rightTeam[1] < this.getCourse().getHolePar(this.getHole())) {
+            // case where left team has birdie or better
+            let leftLocalPoints = (parseInt(leftTeam[0], 10) < parseInt(leftTeam[1], 10)) ? parseInt(leftTeam[1] + leftTeam[0], 10) : parseInt(leftTeam[0] + leftTeam[1], 10);
+            if (leftTeam[0] < this.getCourse().getHolePar(this.getHole()) || leftTeam[1] < this.getCourse().getHolePar(this.getHole())) {
+                let rightLocalPoints = (parseInt(rightTeam[0], 10) < parseInt(rightTeam[1], 10)) ? parseInt(rightTeam[1] + rightTeam[0], 10) : parseInt(rightTeam[0] + rightTeam[1], 10);
+
+                rightNetPoints += (leftLocalPoints - rightLocalPoints);
+                leftNetPoints += (rightLocalPoints - leftLocalPoints);
+            }
+            // case where left team doesnt have better than par
+            else {
+                let rightLocalPoints = (parseInt(rightTeam[0], 10) > parseInt(rightTeam[1], 10)) ? parseInt(rightTeam[1] + rightTeam[0], 10) : parseInt(rightTeam[0] + rightTeam[1], 10);
+
+                rightNetPoints += (leftLocalPoints - rightLocalPoints);
+                leftNetPoints += (rightLocalPoints - leftLocalPoints);
+            }
+        }
+        // case where right team doesn't have birdie or better
+        else {
+            // case where left team has birdie or better
+            let leftLocalPoints = (parseInt(leftTeam[0], 10) > parseInt(leftTeam[1], 10)) ? parseInt(leftTeam[1] + leftTeam[0], 10) : parseInt(leftTeam[0] + leftTeam[1], 10);
+            if (leftTeam[0] < this.getCourse().getHolePar(this.getHole()) || leftTeam[1] < this.getCourse().getHolePar(this.getHole())) {
+                let rightLocalPoints = (parseInt(rightTeam[0], 10) < parseInt(rightTeam[1], 10)) ? parseInt(rightTeam[1] + rightTeam[0], 10) : parseInt(rightTeam[0] + rightTeam[1], 10);
+
+                rightNetPoints += (leftLocalPoints - rightLocalPoints);
+                leftNetPoints += (rightLocalPoints - leftLocalPoints);
+            }
+            // case where left team doesnt have better than par
+            else {
+                let rightLocalPoints = (parseInt(rightTeam[0], 10) > parseInt(rightTeam[1], 10)) ? parseInt(rightTeam[1] + rightTeam[0], 10) : parseInt(rightTeam[0] + rightTeam[1], 10);
+
+                rightNetPoints += (leftLocalPoints - rightLocalPoints);
+                leftNetPoints += (rightLocalPoints - leftLocalPoints);
+            }
+        }
+
+        // apply the multiplier
+        centerNetPoints *= this.mult;
+        rightNetPoints *= this.mult;
+        leftNetPoints *= this.mult;
+
+
+        // Add players corresponding net points
         for (let i = 0; i < this.players.length; i++) {
             let player = this.getPlayers()[i];
 

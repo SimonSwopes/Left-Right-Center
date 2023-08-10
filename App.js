@@ -12,6 +12,7 @@ import PastGamesScreen from './Screens/PastGamesScreen.js';
 import AddCourseScreen from './Screens/AddCourseScreen.js';
 import DeleteCourseScreen from './Screens/DeleteCourseScreen.js';
 import HolesScreen from './Screens/HolesScreen.js';
+import MidGameScoresScreen from './Screens/MidGameScoresScreen.js';
 
 // Context Imports
 import CourseContext from './Contexts/CourseContext.js';
@@ -68,6 +69,7 @@ function App() {
             <Stack.Screen name="15" component={HolesScreen} options={{ title: "Hole 16" }} />
             <Stack.Screen name="16" component={HolesScreen} options={{ title: "Hole 17" }} />
             <Stack.Screen name="17" component={HolesScreen} options={{ title: "Hole 18" }} />
+            <Stack.Screen name="ScoresScreen" component={MidGameScoresScreen} options={{ title: "Current Standings" }} />
           </Stack.Navigator>
         </NavigationContainer>
       </GameContext.Provider>

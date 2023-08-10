@@ -13,7 +13,7 @@ function HolesScreen({ navigation }) {
 
     const refs = React.useRef(Array(5).fill(null));
 
-    currentGame = games[games.length - 1];
+    let currentGame = games[games.length - 1];
 
     if (currentGame.getHole() == 15) {
         Alert.alert('Double Points?', 'Select Yes to double points for the rest of the game.',[
@@ -70,13 +70,7 @@ function HolesScreen({ navigation }) {
 
         currentGame.calculatePoints();
 
-        if (currentGame.getHole() < 17) {
-            currentGame.nextHole();
-            navigation.navigate(currentGame.getHole().toString());
-        }
-        else {
-            navigation.navigate('Home');
-        }
+        navigation.push('ScoresScreen');
     };
 
     const handleScoreUpdate = (index, value) => {

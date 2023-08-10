@@ -94,6 +94,7 @@ function HolesScreen({ navigation }) {
 
     const handleInGameGoBack = () => {
         currentGame.prevHole();
+
     }
     
 

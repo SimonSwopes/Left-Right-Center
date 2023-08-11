@@ -26,11 +26,17 @@ function MidGameScoresScreen({ navigation }) {
 
         <View style={styles.container}>
             <Text style={styles.generalText}>Hello World</Text>
+            <View style={styles.rowContainer}>
+                <Text style={styles.generalText}>Player</Text>
+                <Text style={styles.generalText}>Score</Text>
+                <Text style={styles.generalText}>Points</Text>
+            </View>
             <View style={styles.continueContainer}>
                 <Pressable style={styles.button} onPress={handleContinue}>
-                    <Text style={styles.buttontext}>Next Hole</Text>
+                    <Text style={styles.buttonText}>Next Hole</Text>
                 </Pressable>
             </View>
+
         </View>
     )
 }
@@ -44,6 +50,12 @@ const styles = StyleSheet.create({
     },
 
     generalText: {
+        color: '#fff',
+        fontFamily: 'Times New Roman',
+        fontSize: 24
+    },
+
+    buttonText: {
         color: '#fff',
         fontFamily: 'Times New Roman',
         fontSize: 32
@@ -72,6 +84,10 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontFamily: 'Times New Roman',
         fontSize: 24,
+    },
+
+    rowContainer: {
+        flexDirection: 'row',
     },
 })
 

@@ -174,7 +174,7 @@ function HolesScreen({ navigation }) {
             </View>
             <View style={styles.nextHoleContainer}>
                 <Pressable style={styles.button} onPress={handleNext}>
-                    <Text style={styles.buttontext}>Next Hole</Text>
+                    <Text style={styles.buttontext}>Continue</Text>
                 </Pressable>
             </View>
         </View>

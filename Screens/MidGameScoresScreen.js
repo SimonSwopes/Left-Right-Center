@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, Pressable} from 'react-native';
+import { View, Text, StyleSheet, Pressable, FlatList} from 'react-native';
 import GameContext from '../Contexts/GameListContext.js';
 
 function MidGameScoresScreen({ navigation }) {
@@ -22,15 +22,31 @@ function MidGameScoresScreen({ navigation }) {
         
     }
 
+    const renderNames = ({ player }) => {
+        console.log(`${player}`)
+        return (
+            <View>
+                <Text style={styles.generalText}>{ player }</Text>
+            </View>
+        )
+    }
+
     return (
 
         <View style={styles.container}>
-            <Text style={styles.generalText}>Hello World</Text>
-            <View style={styles.rowContainer}>
-                <Text style={styles.generalText}>Player</Text>
-                <Text style={styles.generalText}>Score</Text>
-                <Text style={styles.generalText}>Points</Text>
-            </View>
+
+            <FlatList
+                data={currentGame.getPlayers()}
+                renderItem={renderNames}
+                keyExtractor={(item, index) => index.toString()}
+
+                ListEmptyComponent={() => (
+                    <View style={styles.container}>
+                        <Text style={styles.generalText}>Hello World</Text>
+                    </View>
+                )}
+            />
+
             <View style={styles.continueContainer}>
                 <Pressable style={styles.button} onPress={handleContinue}>
                     <Text style={styles.buttonText}>Next Hole</Text>

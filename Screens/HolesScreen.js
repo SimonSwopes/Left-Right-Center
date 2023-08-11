@@ -84,7 +84,7 @@ function HolesScreen({ navigation }) {
             if (nextIndex < currentGame.getPlayers().length) {
                 setTimeout(() => {
                     refs.current[nextIndex].focus();
-                }, 100);
+                }, 10);
             }
             else {
                 Keyboard.dismiss();

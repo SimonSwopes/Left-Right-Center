@@ -2,6 +2,9 @@ import * as React from 'react';
 import { StatusBar, StyleSheet, Text, ScrollView, SafeAreaView} from 'react-native';
 
 function RulesScreen({ navigation }) {
+
+
+
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView style={styles.scrollview}>

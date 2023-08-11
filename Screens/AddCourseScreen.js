@@ -62,7 +62,7 @@ function AddCourseScreen({ navigation }) {
             if (nextIndex < 18) {
                 setTimeout(() => {
                     refs.current[nextIndex].focus();
-                },100);
+                },10);
             }
             else {
                 Keyboard.dismiss();

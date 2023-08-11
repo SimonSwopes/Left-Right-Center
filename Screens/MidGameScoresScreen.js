@@ -22,11 +22,16 @@ function MidGameScoresScreen({ navigation }) {
         
     }
 
-    const renderNames = ({ player }) => {
-        console.log(`${player}`)
+    const renderNames = ({ item }) => {
+        const playerName = item;
+        const playerScore = currentGame.getScores()[playerName][currentGame.getHole()];
+        const playerPoints = currentGame.getPoints()[playerName][currentGame.getHole()];
         return (
-            <View>
-                <Text style={styles.generalText}>{ player }</Text>
+            <View style={styles.rowContainer}>
+            <Text style={styles.generalText}>{ playerName }</Text>
+            <Text style={styles.generalText}>{ playerScore }</Text>
+            <Text style={styles.generalText}>{ playerPoints }</Text>
+
             </View>
         )
     }
@@ -34,18 +39,11 @@ function MidGameScoresScreen({ navigation }) {
     return (
 
         <View style={styles.container}>
-
-            <FlatList
-                data={currentGame.getPlayers()}
-                renderItem={renderNames}
-                keyExtractor={(item, index) => index.toString()}
-
-                ListEmptyComponent={() => (
-                    <View style={styles.container}>
-                        <Text style={styles.generalText}>Hello World</Text>
-                    </View>
-                )}
-            />
+                <FlatList
+                    data={currentGame.getPlayers()}
+                    renderItem={renderNames}
+                    keyExtractor={(item, index) => index.toString()}
+                />
 
             <View style={styles.continueContainer}>
                 <Pressable style={styles.button} onPress={handleContinue}>
@@ -68,7 +66,7 @@ const styles = StyleSheet.create({
     generalText: {
         color: '#fff',
         fontFamily: 'Times New Roman',
-        fontSize: 24
+        fontSize: 48
     },
 
     buttonText: {
@@ -86,7 +84,7 @@ const styles = StyleSheet.create({
 
     button: {
         alignItems: 'center',
-        justifycontent: 'center',
+        justifyContent: 'center',
         paddingVertical: 25,
         paddingHorizontal: 100,
         borderRadius: 100,
@@ -96,14 +94,9 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 
-    buttontext: {
-        color: '#fff',
-        fontFamily: 'Times New Roman',
-        fontSize: 24,
-    },
-
     rowContainer: {
         flexDirection: 'row',
+        justifyContent: 'space-around',
     },
 })
 

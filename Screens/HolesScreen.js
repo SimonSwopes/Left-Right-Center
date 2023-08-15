@@ -94,7 +94,13 @@ function HolesScreen({ navigation }) {
 
     const handleInGameGoBack = () => {
         currentGame.prevHole();
-
+        if (currentGame.getHole() === 0) {
+            let newGames = [];
+            for (let i = 0; i < games.length - 1; i++) {
+                newGames.push(games[i]);
+            }
+            setGames(newGames);
+        }
     }
     
 
@@ -102,9 +108,7 @@ function HolesScreen({ navigation }) {
         () =>
             navigation.addListener('beforeRemove', (e) => {
                 e.preventDefault();
-
                 handleInGameGoBack();
-
                 navigation.dispatch(e.data.action)
             })
     )

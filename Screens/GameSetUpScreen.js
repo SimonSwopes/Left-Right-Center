@@ -45,7 +45,11 @@ function GameSetUpScreen({ navigation }) {
         setGames([...games, newGame]);
 
         if (games.length > 10) {
-            setGames(games.splice(1, 9));
+            let newGameList = [];
+            for (let i = 1; i < games.length; i++) {
+                newGameList.push(games[i]);
+            }
+            setGames(newGameList);
         }
 
         navigation.navigate('0');

@@ -27,11 +27,28 @@ function MidGameScoresScreen({ navigation }) {
         const playerScore = currentGame.getScores()[playerName][currentGame.getHole()];
         const playerPoints = currentGame.getPoints()[playerName][currentGame.getHole()];
         return (
-            <View style={styles.rowContainer}>
+            <View>
             <Text style={styles.generalText}>{ playerName }</Text>
-            <Text style={styles.generalText}>{ playerScore }</Text>
-            <Text style={styles.generalText}>{ playerPoints }</Text>
+            </View>
+        )
+    }
 
+    const renderPrevScore = ({ item }) => {
+        const playerName = item;
+        const playerScore = currentGame.getScores()[playerName][currentGame.getHole()];
+        return (
+            <View>
+                <Text style={styles.generalText}>{playerScore}</Text>
+            </View>
+        )
+    }
+
+    const renderPoints = ({ item }) => {
+        const playerName = item;
+        const playerPoints = currentGame.getPoints()[playerName][currentGame.getHole()];
+        return (
+            <View>
+                <Text style={styles.generalText}>{playerPoints}</Text>
             </View>
         )
     }
@@ -39,11 +56,32 @@ function MidGameScoresScreen({ navigation }) {
     return (
 
         <View style={styles.container}>
-                <FlatList
-                    data={currentGame.getPlayers()}
-                    renderItem={renderNames}
-                    keyExtractor={(item, index) => index.toString()}
-                />
+            <View style={styles.rowContainer}>
+                <View>
+                    <Text style={styles.headerText}>Names</Text>
+                    <FlatList
+                        data={currentGame.getPlayers()}
+                        renderItem={renderNames}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
+                </View>
+                <View style={styles.columnContainer}>
+                    <Text style={styles.headerText}>Score </Text>
+                    <FlatList
+                        data={currentGame.getPlayers()}
+                        renderItem={renderPrevScore}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
+                </View>
+                <View style={styles.columnContainer}>
+                    <Text style={styles.headerText}>Points</Text>
+                    <FlatList
+                        data={currentGame.getPlayers()}
+                        renderItem={renderPoints}
+                        keyExtractor={(item, index) => index.toString()}
+                    />
+                </View>
+            </View>
 
             <View style={styles.continueContainer}>
                 <Pressable style={styles.button} onPress={handleContinue}>
@@ -63,10 +101,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
 
+    headerText: {
+        color: '#fff',
+        fontFamily: 'Times New Roman',
+        fontSize: 32
+    },
+
     generalText: {
         color: '#fff',
         fontFamily: 'Times New Roman',
-        fontSize: 48
+        fontSize: 32
     },
 
     buttonText: {
@@ -96,8 +140,11 @@ const styles = StyleSheet.create({
 
     rowContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
     },
+
+    columnContainer: {
+        alignItems: 'center',
+    }
 })
 
 export default MidGameScoresScreen;

@@ -9,8 +9,6 @@ function MidGameScoresScreen({ navigation }) {
     let currentGame = games[games.length - 1];
 
     const handleContinue = () => {
-        console.log('pressed');
-        
         if (currentGame.getHole() < 17) {
             currentGame.nextHole();
 
@@ -24,8 +22,6 @@ function MidGameScoresScreen({ navigation }) {
 
     const renderNames = ({ item }) => {
         const playerName = item;
-        const playerScore = currentGame.getScores()[playerName][currentGame.getHole()];
-        const playerPoints = currentGame.getPoints()[playerName][currentGame.getHole()];
         return (
             <View>
             <Text style={styles.generalText}>{ playerName }</Text>
@@ -58,7 +54,7 @@ function MidGameScoresScreen({ navigation }) {
         <View style={styles.container}>
             <View style={styles.rowContainer}>
                 <View>
-                    <Text style={styles.headerText}>Names</Text>
+                    <Text style={styles.headerText}>Name</Text>
                     <FlatList
                         data={currentGame.getPlayers()}
                         renderItem={renderNames}
@@ -85,7 +81,7 @@ function MidGameScoresScreen({ navigation }) {
 
             <View style={styles.continueContainer}>
                 <Pressable style={styles.button} onPress={handleContinue}>
-                    <Text style={styles.buttonText}>Next Hole</Text>
+                    <Text style={styles.buttonText}>Next</Text>
                 </Pressable>
             </View>
 

@@ -1,7 +1,5 @@
 import * as React from 'react';
-import { StatusBar, Pressable, StyleSheet, Text, View, ScrollView, SafeAreaView, TextInput, KeyboardAvoidingView, FlatList } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
 
 function PastGamesScreen({ navigation }) {
     return (

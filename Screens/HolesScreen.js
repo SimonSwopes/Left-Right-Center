@@ -15,16 +15,6 @@ function HolesScreen({ navigation }) {
 
     let currentGame = games[games.length - 1];
 
-    if (currentGame.getHole() == 15) {
-        Alert.alert('Double Points?', 'Select Yes to double points for the rest of the game.',[
-            {
-                text: 'No',
-                style: 'cancel',
-            },
-            {text: 'Yes', onPress: ()=> currentGame.doubleAmounts()}
-        ])
-    }
-
     const handleNext = () =>
     {
         if (leftSelected.length != 2) {
@@ -69,6 +59,16 @@ function HolesScreen({ navigation }) {
 
 
         currentGame.calculatePoints();
+
+        if (currentGame.getHole() == 14) {
+            Alert.alert('Double Points?', 'Select Yes to double points for the rest of the game.', [
+                {
+                    text: 'No',
+                    style: 'cancel',
+                },
+                { text: 'Yes', onPress: () => currentGame.doubleAmounts() }
+            ])
+        }
 
         navigation.push('ScoresScreen');
     };

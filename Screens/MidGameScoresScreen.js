@@ -15,7 +15,7 @@ function MidGameScoresScreen({ navigation }) {
             navigation.push(currentGame.getHole().toString());
         }
         else {
-            navigation.navigate('SummaryScreen');
+            navigation.navigate('SummaryScreen', {game: currentGame });
         }
         
     }

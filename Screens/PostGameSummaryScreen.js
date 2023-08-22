@@ -1,12 +1,9 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native';
-import GameContext from '../Contexts/GameListContext.js';
 
-function PostGameSummaryScreen({ navigation }) {
+function PostGameSummaryScreen({route ,navigation }) {
 
-    const {games, setGames} = React.useContext(GameContext);
-
-    let currentGame = games[games.length - 1];
+    const { game } = route.params;
 
     const handleFinish = () => {
         navigation.navigate('Home');
@@ -33,8 +30,8 @@ function PostGameSummaryScreen({ navigation }) {
 
         let playerData = [];
 
-        for (let i = 0; i < currentGame.getHole(); i++) {
-            playerData.push([currentGame.getScores()[playerName][i], currentGame.getTeams()[playerName][i] ,currentGame.getPoints()[playerName][i], i+1]);
+        for (let i = 0; i < game.getHole(); i++) {
+            playerData.push([game.getScores()[playerName][i], game.getTeams()[playerName][i] ,game.getPoints()[playerName][i], i+1]);
         }
 
         return (
@@ -55,7 +52,7 @@ function PostGameSummaryScreen({ navigation }) {
 
     const renderFinals = ({ item }) => {
         const playerName = item;
-        const netPoints = currentGame.getPoints()[playerName][currentGame.getPoints()[playerName].length-1];
+        const netPoints = game.getPoints()[playerName][game.getPoints()[playerName].length-1];
 
         return (
             <View>
@@ -68,14 +65,14 @@ function PostGameSummaryScreen({ navigation }) {
         <View style={styles.container}>
             <Text style={styles.layoutText}>(Name Hole[Score, Team, Points])</Text>
             <FlatList
-                data={currentGame.getPlayers()}
+                data={game.getPlayers()}
                 renderItem={renderRow}
                 keyExtractor={(item, index) => index.toString()}
             />
             <View style={styles.totalsContainer}>
                 <Text style={styles.generalText}>Final Points:</Text>
                 <FlatList
-                data={currentGame.getPlayers()}
+                data={game.getPlayers()}
                 renderItem={renderFinals}
                 keyExtractor={(item, index) => index.toString()}
                 />

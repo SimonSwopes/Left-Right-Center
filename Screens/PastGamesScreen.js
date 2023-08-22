@@ -1,11 +1,59 @@
 import * as React from 'react';
-import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, View, FlatList, Pressable } from 'react-native';
+import GameContext from '../Contexts/GameListContext.js';
 
 function PastGamesScreen({ navigation }) {
+
+    const {games, setGames} = React.useContext(GameContext);
+
+    const loadSummary = () =>{
+        console.log('pressed');
+    }
+
+    const renderNames = ({ item }) => {
+        const player = item;
+
+        return (
+            <View>
+                <Text style={styles.generaltext}>{player}</Text>
+            </View>
+        )
+    }
+
+    const renderGameList = ({ item }) => {
+        const game = item;
+        players = game.getPlayers();
+
+        console.log('called');
+        
+        return (
+            <View>
+                <Pressable style={styles.gameButton} onPress={loadSummary}>
+                    <Text style={styles.generaltext}>{game.getCourse().getCourseName()}: </Text>
+                    <FlatList
+                        data={players}
+                        renderItem={renderNames}
+                        keyExtractor={(item, index) => index.toString()}
+                        horizontal={true}
+                        ItemSeparatorComponent={() => <View style={{ width: 15 }} />}
+                    />
+                </Pressable>
+            </View>
+        )
+    }
+
     return (
         <View style={styles.container}>
-            <StatusBar barStyle='dark-content' hidden={false} translucent backgroundColor="transparent" />
-            <Text style={styles.generaltext}>Todo: a list of previous games</Text>
+            <FlatList
+                data={games}
+                renderItem={renderGameList}
+                keyExtractor={(item, index) => index.toString()}
+                ListEmptyComponent={() => (
+                    <View>
+                        <Text style={styles.generaltext}>No Games Saved.</Text>
+                    </View>
+                )}
+            />
         </View>
     )
 }
@@ -18,46 +66,15 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 
-    rulesContainer: {
-        flex: 1,
-        backgroundColor: '#000',
-        alignItems: 'baseline',
-        justifyContent: 'flex-start',
-    },
-
-    inputContainer: {
-        flex: 2,
-        backgroundColor: '#000',
-        alignItems: 'baseline',
-        justifyItems: 'flex-start',
-    },
-
-    courseContainer: {
-        flex: 2,
-        backgroundColor: '#000',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-
-    scrollview: {
-        marginHorizontal: 20,
-    },
-
     generaltext: {
         color: '#fff',
         fontFamily: 'Times New Roman',
         fontSize: 32,
     },
 
-    rulestext: {
-        color: '#fff',
-        fontFamily: 'Times New Roman',
-        fontSize: 24,
-    },
-
-    button: {
+    gameButton: {
         alignItems: 'center',
-        justifycontent: 'center',
+        justifyContent: 'center',
         paddingVertical: 25,
         paddingHorizontal: 100,
         borderRadius: 100,
@@ -66,34 +83,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10,
     },
-
-    space: {
-        width: 20,
-        height: 20,
-    },
-
-    input: {
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        color: '#000',
-        backgroundColor: '#fff',
-    },
-
-    gridContainer: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: "space-between",
-    },
-
-    courseText: {
-        color: '#fff',
-        fontFamily: 'Times New Roman',
-        fontSize: 18,
-        marginVerticall: 5,
-    },
-
 });
 
 export default PastGamesScreen;

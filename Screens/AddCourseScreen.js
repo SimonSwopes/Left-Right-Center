@@ -48,6 +48,9 @@ function AddCourseScreen({ navigation }) {
         else{
             const newCourse = new Course(course, pars);
             setCourseData([...courseData, newCourse]);
+
+            // TODO: store the course as a JSON
+            
             navigation.goBack();
         }
     };

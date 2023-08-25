@@ -6,6 +6,9 @@ function PostGameSummaryScreen({route ,navigation }) {
     const { game } = route.params;
 
     const handleFinish = () => {
+
+        // TODO: Save the game as a JSON
+
         navigation.navigate('Home');
     }
 
